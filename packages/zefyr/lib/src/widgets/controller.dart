@@ -1,8 +1,10 @@
 // Copyright (c) 2018, the Zefyr project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
+import 'dart:convert';
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:notus/notus.dart';
 import 'package:quill_delta/quill_delta.dart';
@@ -32,12 +34,29 @@ class ZefyrController extends ChangeNotifier {
         _document = document;
 
   /// Zefyr document managed by this controller.
-  NotusDocument get document => _document;
+  NotusDocument get document {
+    return _document;
+  }
+
+  set document(NotusDocument newDocument) {
+    _document = newDocument;
+    notifyListeners();
+  }
+
   NotusDocument _document;
 
   /// Currently selected text within the [document].
   TextSelection get selection => _selection;
   TextSelection _selection = _kZeroSelection;
+
+  Set<String> _embeddedImages = Set();
+  Set<String> get embeddedImages {
+    return _embeddedImages;
+  }
+
+  void embedImage(String path) {
+    _embeddedImages.add(path);
+  }
 
   ChangeSource _lastChangeSource;
 
@@ -101,6 +120,15 @@ class ZefyrController extends ChangeNotifier {
       }
     }
     _lastChangeSource = source;
+
+    String documentContent = jsonEncode(document.toJson());
+
+    for (String imagePath in _embeddedImages) {
+      if (!documentContent.contains(imagePath)) {
+        _embeddedImages.remove(imagePath);
+      }
+    }
+
     notifyListeners();
   }
 
