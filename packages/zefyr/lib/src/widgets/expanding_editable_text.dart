@@ -237,7 +237,6 @@ class _ZefyrExpandingEditableTextState extends State<ZefyrExpandingEditableText>
   // Private members
   //
 
-  final ScrollController _scrollController = ScrollController();
   ZefyrRenderContext _renderContext;
   CursorTimer _cursorTimer;
   InputConnectionController _input;

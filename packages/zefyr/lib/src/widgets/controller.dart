@@ -50,12 +50,25 @@ class ZefyrController extends ChangeNotifier {
   TextSelection _selection = _kZeroSelection;
 
   Set<String> _embeddedImages = Set();
+  Set<String> _removedImages = Set();
+  bool _checkingImages = false;
   Set<String> get embeddedImages {
     return _embeddedImages;
   }
 
   void embedImage(String path) {
     _embeddedImages.add(path);
+  }
+
+  Future<Set<String>> removeExtraImages() {
+    String documentContent = jsonEncode(document.toJson());
+    Set<String> removedImages = Set();
+    for (String imagePath in _embeddedImages) {
+      if (!documentContent.contains(imagePath)) {
+        removedImages.add(imagePath);
+      }
+    }
+    return Future.value(removedImages);
   }
 
   ChangeSource _lastChangeSource;
@@ -121,14 +134,6 @@ class ZefyrController extends ChangeNotifier {
     }
     _lastChangeSource = source;
 
-    String documentContent = jsonEncode(document.toJson());
-
-    for (String imagePath in _embeddedImages) {
-      if (!documentContent.contains(imagePath)) {
-        _embeddedImages.remove(imagePath);
-      }
-    }
-
     notifyListeners();
   }
 
@@ -187,6 +192,16 @@ class ZefyrController extends ChangeNotifier {
       }
     }
     _lastChangeSource = ChangeSource.local;
+
+    if (!_checkingImages) {
+      _checkingImages = true;
+      removeExtraImages().then((Set<String> removedImages) {
+        _embeddedImages.removeAll(removedImages);
+        _removedImages.addAll(removedImages);
+        _checkingImages = false;
+      });
+    }
+
     notifyListeners();
   }
 
@@ -211,6 +226,7 @@ class ZefyrController extends ChangeNotifier {
     if (_selection != adjustedSelection) {
       _updateSelectionSilent(adjustedSelection, source: _lastChangeSource);
     }
+
     notifyListeners();
   }
 
