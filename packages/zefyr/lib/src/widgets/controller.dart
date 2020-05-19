@@ -56,19 +56,23 @@ class ZefyrController extends ChangeNotifier {
     return _embeddedImages;
   }
 
+  Set<String> get removedImages {
+    return _removedImages;
+  }
+
   void embedImage(String path) {
     _embeddedImages.add(path);
   }
 
   Future<Set<String>> removeExtraImages() {
     String documentContent = jsonEncode(document.toJson());
-    Set<String> removedImages = Set();
+    Set<String> imagesToRemove = Set();
     for (String imagePath in _embeddedImages) {
       if (!documentContent.contains(imagePath)) {
-        removedImages.add(imagePath);
+        imagesToRemove.add(imagePath);
       }
     }
-    return Future.value(removedImages);
+    return Future.value(imagesToRemove);
   }
 
   ChangeSource _lastChangeSource;
@@ -195,9 +199,9 @@ class ZefyrController extends ChangeNotifier {
 
     if (!_checkingImages) {
       _checkingImages = true;
-      removeExtraImages().then((Set<String> removedImages) {
-        _embeddedImages.removeAll(removedImages);
-        _removedImages.addAll(removedImages);
+      removeExtraImages().then((Set<String> imagesToRemove) {
+        _embeddedImages.removeAll(imagesToRemove);
+        _removedImages.addAll(imagesToRemove);
         _checkingImages = false;
       });
     }
