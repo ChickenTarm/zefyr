@@ -319,7 +319,7 @@ class _LinkButtonState extends State<LinkButton> {
     return toolbar.buildButton(
       context,
       ZefyrToolbarAction.link,
-      onPressed: enabled ? showOverlay : null,
+      onPressed: enabled ? showOverlay : () {},
     );
   }
 

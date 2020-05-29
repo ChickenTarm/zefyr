@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:notus/notus.dart';
 
 import 'buttons.dart';
@@ -338,7 +339,7 @@ class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
   static const kDefaultButtonIcons = {
     ZefyrToolbarAction.bold: Icons.format_bold,
     ZefyrToolbarAction.italic: Icons.format_italic,
-    ZefyrToolbarAction.link: Icons.link,
+    ZefyrToolbarAction.link: FontAwesomeIcons.link,
     ZefyrToolbarAction.unlink: Icons.link_off,
     ZefyrToolbarAction.clipboardCopy: Icons.content_copy,
     ZefyrToolbarAction.openInBrowser: Icons.open_in_new,
@@ -357,6 +358,7 @@ class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
   };
 
   static const kSpecialIconSizes = {
+    ZefyrToolbarAction.link: 20.0,
     ZefyrToolbarAction.unlink: 20.0,
     ZefyrToolbarAction.clipboardCopy: 20.0,
     ZefyrToolbarAction.openInBrowser: 20.0,
