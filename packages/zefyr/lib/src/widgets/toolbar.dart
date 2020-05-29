@@ -340,7 +340,7 @@ class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
     ZefyrToolbarAction.bold: Icons.format_bold,
     ZefyrToolbarAction.italic: Icons.format_italic,
     ZefyrToolbarAction.link: FontAwesomeIcons.link,
-    ZefyrToolbarAction.unlink: Icons.link_off,
+    ZefyrToolbarAction.unlink: FontAwesomeIcons.unlink,
     ZefyrToolbarAction.clipboardCopy: Icons.content_copy,
     ZefyrToolbarAction.openInBrowser: Icons.open_in_new,
     ZefyrToolbarAction.heading: Icons.format_size,
