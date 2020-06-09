@@ -65,6 +65,7 @@ class _ZefyrLineState extends State<ZefyrLine> {
 
     if (scope.mode == ZefyrMode.select) {
       Color cursorColor;
+      // ignore: missing_enum_constant_in_switch
       switch (theme.platform) {
         case TargetPlatform.iOS:
           cursorColor ??= CupertinoTheme.of(context).primaryColor;
@@ -93,6 +94,7 @@ class _ZefyrLineState extends State<ZefyrLine> {
 
     if (scope.mode == ZefyrMode.edit) {
       Color cursorColor;
+      // ignore: missing_enum_constant_in_switch
       switch (theme.platform) {
         case TargetPlatform.iOS:
           cursorColor ??= CupertinoTheme.of(context).primaryColor;

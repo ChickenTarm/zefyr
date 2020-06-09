@@ -228,6 +228,7 @@ class BlockTheme {
     final defaultTextStyle = DefaultTextStyle.of(context);
     final padding = const EdgeInsets.symmetric(vertical: 8.0);
     String fontFamily;
+    // ignore: missing_enum_constant_in_switch
     switch (themeData.platform) {
       case TargetPlatform.iOS:
         fontFamily = 'Menlo';

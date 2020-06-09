@@ -313,11 +313,13 @@ class PreserveBlockStyleOnPasteRule extends InsertRule {
     for (var i = 0; i < lines.length; i++) {
       final line = lines[i];
       if (line.isNotEmpty) {
-        print("zefyr paste: ${line}");
-        if (Uri.parse(line.trim()).isAbsolute) {
-          result.insert(line, {'a': line.trim()});
-        }
-        else {
+        try {
+          if (Uri.parse(line.trim()).isAbsolute) {
+            result.insert(line, {'a': line.trim()});
+          } else {
+            result.insert(line);
+          }
+        } on Exception catch (_) {
           result.insert(line);
         }
       }
@@ -329,6 +331,33 @@ class PreserveBlockStyleOnPasteRule extends InsertRule {
         result.insert('\n', blockStyle);
       }
     }
+
+    return result;
+  }
+}
+
+/// Checks if the pasted text is a link
+class CheckLinkOnPasteRule extends InsertRule {
+  const CheckLinkOnPasteRule();
+
+  @override
+  Delta apply(Delta document, int index, String text) {
+    try { 
+      // need this try since the parsing will throw an error after empty :
+      if (!Uri.parse(text.trim()).isAbsolute) {
+        // Only interested in text containing a url
+        return null;
+      }
+    } on Exception catch (_) {
+      return null;
+    }
+
+    final iter = DeltaIterator(document);
+    iter.skip(index);
+
+    final result = Delta()..retain(index);
+
+    result.insert(text, {'a': text.trim()});
 
     return result;
   }
