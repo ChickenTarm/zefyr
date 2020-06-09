@@ -244,8 +244,6 @@ class _ZefyrSelectionOverlayState extends State<ZefyrSelectionOverlay>
     HitTestResult result = HitTestResult();
     WidgetsBinding.instance.hitTest(result, globalPoint);
 
-    // RenderEditableProxyBox box = _getEditableBox(result);
-
     RenderEditableBox box = _getEditableBox(result);
 
     if (box == null) {

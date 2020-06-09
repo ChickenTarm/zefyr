@@ -365,6 +365,10 @@ class _LinkButtonState extends State<LinkButton> {
               uri.host.isNotEmpty) {
             toolbar.editor.formatSelection(
                 NotusAttribute.link.fromString(_inputController.text));
+            TextSelection selection = TextSelection.collapsed(
+                offset: toolbar.editor.controller.selection.end);
+            toolbar.editor.controller
+                .updateSelection(selection, source: ChangeSource.local);
           } else {
             error = true;
           }
@@ -431,11 +435,11 @@ class _LinkButtonState extends State<LinkButton> {
     final toolbar = ZefyrToolbar.of(context);
     final style = toolbar.editor.selectionStyle;
 
-    String value = 'Tap to edit link';
+    String value = 'Tap here to edit link';
     if (style.contains(NotusAttribute.link)) {
       value = style.value(NotusAttribute.link);
     }
-    final clipboardEnabled = value != 'Tap to edit link';
+    final clipboardEnabled = value != 'Tap here to edit link';
     final body = !isEditing
         ? _LinkView(value: value, onTap: edit)
         : _LinkInput(
@@ -536,7 +540,7 @@ class _LinkInputState extends State<_LinkInput> {
       autofocus: true,
       decoration: InputDecoration(
         hintText: 'https://',
-        hintStyle: TextStyle(color: Colors.white),
+        hintStyle: TextStyle(color: Colors.grey[600]),
         filled: true,
         fillColor: toolbarTheme.color,
         border: InputBorder.none,
@@ -568,8 +572,7 @@ class _LinkView extends StatelessWidget {
               value,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.subhead
-                  .copyWith(color: Colors.grey[200]),
+              style: theme.textTheme.subhead.copyWith(color: Colors.grey[200]),
             ),
           )
         ],

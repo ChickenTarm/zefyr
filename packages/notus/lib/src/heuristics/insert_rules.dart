@@ -313,7 +313,13 @@ class PreserveBlockStyleOnPasteRule extends InsertRule {
     for (var i = 0; i < lines.length; i++) {
       final line = lines[i];
       if (line.isNotEmpty) {
-        result.insert(line);
+        print("zefyr paste: ${line}");
+        if (Uri.parse(line.trim()).isAbsolute) {
+          result.insert(line, {'a': line.trim()});
+        }
+        else {
+          result.insert(line);
+        }
       }
       if (i == 0) {
         result.insert('\n', lineStyle);
