@@ -15,7 +15,10 @@ dependencies:
   quill_delta: ^1.0.0
   font_awesome_flutter: ^8.8.1
   notus: 
-    path: ../notus
+    # path: ../notus
+    git:
+      url: https://github.com/ChickenTarm/zefyr.git
+      path: packages/notus/
   meta: ^1.1.0
   quiver_hashcode: ^2.0.0
 
