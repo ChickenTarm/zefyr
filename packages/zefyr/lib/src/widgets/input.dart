@@ -17,7 +17,8 @@ class InputConnectionController implements TextInputClient {
   //
 
   @override
-  TextEditingValue get currentTextEditingValue => _lastKnownRemoteTextEditingValue;
+  TextEditingValue get currentTextEditingValue =>
+      _lastKnownRemoteTextEditingValue;
 
   final RemoteValueChanged onValueChanged;
 
@@ -182,5 +183,14 @@ class InputConnectionController implements TextInputClient {
       _lastKnownRemoteTextEditingValue = null;
       _sentRemoteValues.clear();
     }
+  }
+
+  @override
+  // https://flutter.dev/docs/release/breaking-changes/add-currentAutofillScope-to-TextInputClient
+  AutofillScope get currentAutofillScope => null;
+
+  @override
+  void showAutocorrectionPromptRect(int start, int end) {
+    // https://flutter.dev/docs/release/breaking-changes/add-showAutocorrectionPromptRect
   }
 }

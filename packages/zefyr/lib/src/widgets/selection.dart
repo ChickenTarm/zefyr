@@ -14,7 +14,6 @@ import 'controller.dart';
 import 'editable_box.dart';
 import 'scope.dart';
 
-
 /// Selection overlay controls selection handles and other gestures.
 class ZefyrSelectionOverlay extends StatefulWidget {
   const ZefyrSelectionOverlay({Key key, @required this.controls})
@@ -60,13 +59,13 @@ class _ZefyrSelectionOverlayState extends State<ZefyrSelectionOverlay>
   }
 
   RenderEditableBox _getEditableBox(HitTestResult result) {
-  for (var entry in result.path) {
-    if (entry.target is RenderEditableBox) {
-      return entry.target as RenderEditableBox;
+    for (var entry in result.path) {
+      if (entry.target is RenderEditableBox) {
+        return entry.target as RenderEditableBox;
+      }
     }
+    return null;
   }
-  return null;
-}
 
   void showToolbar() {
     final toolbarOpacity = _toolbarController.view;
@@ -596,12 +595,14 @@ class _SelectionToolbarState extends State<_SelectionToolbar> {
     );
 
     final toolbar = controls.buildToolbar(
-        context,
-        editingRegion,
-        block.preferredLineHeight,
-        midpoint,
-        endpoints,
-        widget.selectionOverlay);
+      context,
+      editingRegion,
+      block.preferredLineHeight,
+      midpoint,
+      endpoints,
+      widget.selectionOverlay,
+      null, // Null value given when upgrading Flutter.
+    );
     return CompositedTransformFollower(
       link: block.layerLink,
       showWhenUnlinked: false,
