@@ -193,4 +193,10 @@ class InputConnectionController implements TextInputClient {
   void showAutocorrectionPromptRect(int start, int end) {
     // https://flutter.dev/docs/release/breaking-changes/add-showAutocorrectionPromptRect
   }
+
+  @override
+  void performPrivateCommand(String action, Map<String, dynamic> data) {
+    // TODO Does this need to be implemented?
+    // https://developer.android.com/reference/android/view/inputmethod/InputConnection#performPrivateCommand(java.lang.String,%20android.os.Bundle)
+  }
 }
